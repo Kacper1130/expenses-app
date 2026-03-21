@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@tanstack/react-router": "^1.168.1",
+    "axios": "^1.13.6"
+  },
+  "devDependencies": {
+    "@tanstack/router-plugin": "^1.167.2"
+  }
+}

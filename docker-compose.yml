@@ -26,9 +26,6 @@ services:
       - "8080:8080"
     depends_on:
       - auth-service
-#    environment:
-#      # Ważne: Gateway łączy się po nazwie serwisu w Dockerze, nie localhost!
-#      - AUTH_SERVICE_URL=http://auth-service:8081
 
 volumes:
   postgres_data: {}

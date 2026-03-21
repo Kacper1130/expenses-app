@@ -1,4 +1,6 @@
 package auth_service.dto;
 
-public record RegistrationRequest(String email, String password, String confirmPassword) {
+import jakarta.validation.constraints.NotBlank;
+
+public record RegistrationRequest(@NotBlank String email, @NotBlank String password, @NotBlank String confirmPassword) {
 }
