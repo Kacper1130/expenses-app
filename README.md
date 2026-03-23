@@ -1,4 +1,4 @@
-![Diagram](diagram.svg)
+![Diagram](nowy.svg)
 
 Aby uruchomić aplikację, wystarczy wykonać poniższą komendę:
 
