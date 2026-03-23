@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class PasswordsNotMatchException extends BaseException {
     public PasswordsNotMatchException() {
-        super("Passwords do not match", HttpStatus.BAD_REQUEST);
+        super("Hasła nie są takie same", HttpStatus.BAD_REQUEST);
     }
 }

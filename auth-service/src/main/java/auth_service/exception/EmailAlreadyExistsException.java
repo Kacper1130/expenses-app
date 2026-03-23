@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class EmailAlreadyExistsException extends BaseException {
     public EmailAlreadyExistsException() {
-        super("This email is already registered", HttpStatus.CONFLICT);
+        super("Podany e-mail został już użyty", HttpStatus.CONFLICT);
     }
 }
