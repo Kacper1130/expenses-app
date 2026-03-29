@@ -20,12 +20,38 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
 
+  expense-db:
+    image: postgres:17.9
+    container_name: expense_db
+    ports:
+      - 5434:5432
+    volumes:
+      - expense_postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=expense_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  expense-service:
+    build: ./expense-service
+    depends_on:
+      expense-db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@expense-db:5432/expense_db
+      
   gateway:
     build: ./gateway
     ports:
       - "8080:8080"
     depends_on:
       - auth-service
+      - expense-service
 
   frontend:
     build: ./frontend
@@ -36,3 +62,4 @@ services:
 
 volumes:
   postgres_data: {}
+  expense_postgres_data: {}

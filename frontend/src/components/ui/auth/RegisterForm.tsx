@@ -2,6 +2,12 @@ import {useState} from 'react'
 import {Button, ErrorBanner, TextInput} from '../index'
 import {useAuth} from '../../../hooks/useAuth'
 
+const PersonIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+    </svg>
+)
 const EmailIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -42,33 +48,43 @@ function PasswordStrengthBar({password}: { password: string }) {
         <div className="strength-wrap">
             <div className="strength-bar">
                 {[1, 2, 3, 4].map((i) => (
-                    <div
-                        key={i}
-                        className="strength-segment"
+                    <div key={i} className="strength-segment"
                         style={{background: i <= score ? STRENGTH_COLOR[score] : 'var(--color-border-strong)'}}
                     />
                 ))}
             </div>
             <span className="strength-label" style={{color: STRENGTH_COLOR[score]}}>
-        {STRENGTH_LABEL[score]}
-      </span>
+                {STRENGTH_LABEL[score]}
+            </span>
         </div>
     )
 }
 
 export function RegisterForm() {
     const {register, loading, error, clearError} = useAuth()
+    const [name, setName] = useState('')          // NOWE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        register({email, password, confirmPassword})
+        register({name, email, password, confirmPassword})  // dodajemy name
     }
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+            {/* NOWE pole — imię */}
+            <TextInput
+                label="Imię"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Jan"
+                iconLeft={<PersonIcon/>}
+                autoComplete="given-name"
+                required
+            />
             <TextInput label="Adres e-mail" type="email" value={email}
                        onChange={(e) => setEmail(e.target.value)}
                        placeholder="jan@kowalski.pl" iconLeft={<EmailIcon/>}
@@ -83,8 +99,7 @@ export function RegisterForm() {
             <TextInput label="Potwierdź hasło" value={confirmPassword}
                        onChange={(e) => setConfirmPassword(e.target.value)}
                        placeholder="••••••••" iconLeft={<CheckLockIcon/>}
-                       revealable autoComplete="new-password" required
-            />
+                       revealable autoComplete="new-password" required/>
             <ErrorBanner message={error} onDismiss={clearError}/>
             <Button type="submit" fullWidth loading={loading}>
                 Utwórz konto

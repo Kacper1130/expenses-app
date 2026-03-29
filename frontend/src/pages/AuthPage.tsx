@@ -14,7 +14,7 @@ function Logo() {
                     <path d="M2 10h20M6 15h4"/>
                 </svg>
             </div>
-            <span className="logo-text">Nazwa do wymyślenia</span>
+            <span className="logo-text">NaPół</span>
             <span className="logo-dot">.</span>
         </div>
     )

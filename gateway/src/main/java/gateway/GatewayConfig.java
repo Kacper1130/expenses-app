@@ -19,6 +19,10 @@ public class GatewayConfig {
                 .route("auth-service", r -> r.path("/api/auth/**")
                         .uri("http://auth-service:8081"))
 
+                .route("expense-service", r -> r.path("/api/expenses/**")
+                        .filters(f -> f.filter(jwtFilter.apply(new JwtFilter.Config())))
+                        .uri("http://expense-service:8082"))
+
                 .build();
     }
 

@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -18,6 +21,11 @@ public class UserService {
         return saveNewUser(request);
     }
 
+    // NOWE — szukamy usera po ID (expense-service będzie tego używał)
+    public Optional<User> findById(UUID id) {
+        return userRepository.findById(id);
+    }
+
     private void checkIfUserExists(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException();
@@ -28,6 +36,7 @@ public class UserService {
         User user = User.builder()
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
+                .name(request.name())  // NOWE — zapisujemy imię
                 .build();
 
         return userRepository.save(user);
