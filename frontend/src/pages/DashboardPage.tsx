@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getMyGroups, createGroup, joinGroup, getExpenses, addExpense, getBalances } from '../api/expenseApi';
-import { useAuth } from '../hooks/useAuth';
 import type { Group, Expense, BalanceSummary } from '../types/expense';
 
 type Tab = 'expenses' | 'balances';
 
 export function DashboardPage() {
-    const { logout } = useAuth();
 
     const [groups, setGroups] = useState<Group[]>([]);
     const [groupsLoading, setGroupsLoading] = useState(true);
@@ -112,22 +110,6 @@ export function DashboardPage() {
 
     return (
         <div style={{ minHeight: '100vh', background: 'var(--color-bg)', color: 'var(--color-text)', fontFamily: 'var(--font-body)' }}>
-
-            {/* Header */}
-            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 2rem', borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)', position: 'sticky', top: 0, zIndex: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <div style={{ width: 32, height: 32, background: 'var(--color-accent-dim)', border: '1px solid var(--color-accent-border)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2.5">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.5px' }}>NaPół</span>
-                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800, color: 'var(--color-accent)' }}>.</span>
-                </div>
-                <button onClick={logout} style={{ padding: '0.375rem 0.75rem', background: 'transparent', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', color: 'var(--color-muted)', fontSize: 13, cursor: 'pointer' }}>
-                    Wyloguj
-                </button>
-            </header>
 
             <main style={{ maxWidth: 900, margin: '0 auto', padding: '2rem 1.5rem' }}>
 
