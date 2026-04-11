@@ -2,8 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app import models, schemas
-from app.users import get_user_name
+from app.users import get_user_name, get_user_emails
 from app.settlement import compute_group_balances, calculate_debts
+from app.kafka_producer import publish_expense_created
 
 router = APIRouter(prefix="/api/expenses/groups", tags=["expenses"])
 
@@ -52,6 +53,22 @@ async def add_expense(
     )
     db.add(new_expense)
     db.flush()  # potrzebujemy new_expense.id dla splitów
+
+    paid_by_name = await get_user_name(new_expense.paid_by)
+
+    recipient_ids = [m for m in member_ids if m != user_id]
+    recipient_emails = await get_user_emails(recipient_ids)
+
+    if recipient_emails:
+        publish_expense_created(
+            group_id=str(group_id),
+            expense_id=str(new_expense.id),
+            paid_by_name=paid_by_name,
+            amount=new_expense.amount,
+            description=new_expense.description,
+            created_at=new_expense.created_at,
+            recipient_emails=recipient_emails
+        )
 
     # Zapisz podział — jeden wiersz na osobę
     for member_id in member_ids:

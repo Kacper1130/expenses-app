@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/expense-service/expense-service.iml" filepath="$PROJECT_DIR$/expense-service/expense-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/notification-service.iml" filepath="$PROJECT_DIR$/notification-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/sledzenieWydatkow.iml" filepath="$PROJECT_DIR$/.idea/sledzenieWydatkow.iml" />
     </modules>
   </component>
