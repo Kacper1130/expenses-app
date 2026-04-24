@@ -1,4 +1,4 @@
-![Diagram](diagram3.svg)
+![Diagram](expenses-app-schema.svg)
 
 Aby uruchomić aplikację, wystarczy wykonać poniższą komendę:
 
